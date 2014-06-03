@@ -16,9 +16,14 @@ for line in lines:
     idf_freq[word] = float(freq)
 
 median_idf = sorted(idf_freq.values())[len(idf_freq)/2]
+# replace with chinese stop words
+'''
 stop_words= set([
 "the","of","is","and","to","in","that","we","for","an","are","by","be","as","on","with","can","if","from","which","you","it","this","then","at","have","all","not","one","has","or","that"
 ])
+'''
+f_name = os.path.join(_curpath, "chinese_stop_words.txt")
+
 
 def extract_tags(sentence,topK=20):
     words = jieba.cut(sentence)
