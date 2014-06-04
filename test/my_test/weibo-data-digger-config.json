@@ -1,0 +1,11 @@
+{
+	"api_key": 71156890,
+	"output": {
+		"mysql": {
+			"host": "192.168.0.104",
+			"database": "weibo",
+			"user": "weibo",
+			"password": "mZ85fC^pf@D4Wb7UHsUVs4%j"
+		}
+	}
+}

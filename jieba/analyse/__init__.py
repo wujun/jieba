@@ -22,8 +22,15 @@ stop_words= set([
 "the","of","is","and","to","in","that","we","for","an","are","by","be","as","on","with","can","if","from","which","you","it","this","then","at","have","all","not","one","has","or","that"
 ])
 '''
-f_name = os.path.join(_curpath, "chinese_stop_words.txt")
 
+# add chinse stop words.
+f_name = os.path.join(_curpath,"chinese_stop_words.txt")
+content = open(f_name, 'rb').read().decode('utf-8')
+lines = content.split('\n')
+stop_words = set()
+for line in lines:
+    words = line.split()
+    stop_words |= set(words)
 
 def extract_tags(sentence,topK=20):
     words = jieba.cut(sentence)
