@@ -32,8 +32,16 @@ for line in lines:
     words = line.split()
     stop_words |= set(words)
 
-def extract_tags(sentence,topK=20):
+def extract_tags(sentence,topK=None):
     words = jieba.cut(sentence)
+    
+    # calculate topK according to length of sentece if no topK specified.
+    kw = len(list(words)) / 3
+    if kw > 0:
+     topK = kw
+    else:
+     topK = 1
+     
     freq = {}
     for w in words:
         if len(w.strip())<2: continue

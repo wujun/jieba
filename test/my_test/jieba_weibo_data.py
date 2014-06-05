@@ -54,9 +54,6 @@ jieba.load_userdict("../data/userdict.txt")
 content = ''
 for m in data_source.read_msgs(limit = 10):
 	msg = data_source.process_msg(m)
-	#print(repr(msg))
-	#print(msg[3])
-	#content += msg[3] + '\n'
 	
 	#url filter.
 	substring = re.sub(r'(http|https|ftp)://\S+', '', msg[3])
