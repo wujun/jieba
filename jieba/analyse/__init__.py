@@ -33,10 +33,11 @@ for line in lines:
     stop_words |= set(words)
 
 def extract_tags(sentence,topK=None):
-    words = jieba.cut(sentence)
-    
     # calculate topK according to length of sentece if no topK specified.
-    kw = len(list(words)) / 3
+    # words = jieba.cut(sentence))
+    words = list(jieba.cut(sentence))
+    
+    kw = len(words) / 3
     if kw > 0:
      topK = kw
     else:
