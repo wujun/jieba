@@ -47,6 +47,8 @@ def extract_tags(sentence,topK=None):
     for w in words:
         if len(w.strip())<2: continue
         if w.lower() in stop_words: continue
+        # filter out digit temply
+        if w.isdigit(): continue
         freq[w]=freq.get(w,0.0)+1.0
     total = sum(freq.values())
     freq = [(k,v/total) for k,v in freq.iteritems()]

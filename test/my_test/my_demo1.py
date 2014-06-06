@@ -28,6 +28,9 @@ def data_fileter(msgs):
         filtered += text + '\n'
     return filtered
     
+# add user dict
+jieba.load_userdict("userdict.txt")
+
 file_name = args[0]
 
 if opt.topK is None:
