@@ -3,6 +3,9 @@ import re
 import jieba
 import jieba.analyse
 from optparse import OptionParser
+from gensim import corpora, models, similarities
+import logging
+logging.basicConfig(format='%(asctime)s : %(levelname)s : %(message)s', level=logging.INFO)
 
 USAGE = "usage:    python extract_tags.py [file name] -k [top k] or \n python extract_tags.py [file name]"
 
@@ -44,10 +47,45 @@ content = open(file_name, 'rb').read()
 filtered = data_fileter(content)
 
 sentences = filtered.split('\n')
+
+texts = []
 for str in sentences:
     tags = jieba.analyse.extract_tags(str, topK=topK)
-    print ",".join(tags)
+    texts.append(tags)
+    #print ",".join(tags)
+
+# only for display
+for i in range(len(texts)):
+    line = texts[i]
+    str_line = ''
+    for j in range(len(line)):
+         str_line  += (line[j].encode("utf-8")) + ","
+    print(str_line)
+
+# tokenize
+dictionary = corpora.Dictionary(texts)
+dictionary.save('/tmp/weibo.dict')
+corpus = [dictionary.doc2bow(text) for text in texts]
+corpora.MmCorpus.serialize('/tmp/weibo.mm', corpus)
+#print(corpus)
     
+# create a transformation
+tfidf = models.TfidfModel(corpus)
+corpus_tfidf = tfidf[corpus]
+#for doc in corpus_tfidf:
+#    print(doc)
+
+# LSI
+lsi = models.LsiModel(corpus_tfidf, id2word=dictionary, num_topics=2)
+corpus_lsi = lsi[corpus_tfidf]
+#lsi.print_topics(2)
+#for doc in corpus_lsi:
+#    print(doc)
+
+# init similarity query
+sim_index = similarities.MatrixSimilarity(lsi[corpus])
+
+
 # extreact key words
 #tags = jieba.analyse.extract_tags(filtered, topK=topK)
 
